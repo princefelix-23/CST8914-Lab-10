@@ -17,7 +17,7 @@ class MenuButtonActions {
     this.lastMenuitem = false;
     this.firstChars = [];
 
-// Add event listeners for button interactions
+    // Add event listeners for button interactions
     this.buttonNode.addEventListener(
       'keydown',
       this.onButtonKeydown.bind(this)
@@ -47,11 +47,11 @@ class MenuButtonActions {
       }
       this.lastMenuitem = menuitem;
     }
-// Add focus in and focus out event listeners for handling focus styles
+    // Add focus in and focus out event listeners for handling focus styles
     domNode.addEventListener('focusin', this.onFocusin.bind(this));
     domNode.addEventListener('focusout', this.onFocusout.bind(this));
 
-// Add mousedown event listener on window to handle clicks outside the menu
+    // Add mousedown event listener on window to handle clicks outside the menu
     window.addEventListener(
       'mousedown',
       this.onBackgroundMousedown.bind(this),
@@ -61,7 +61,13 @@ class MenuButtonActions {
 
   setFocusToMenuitem(newMenuitem) {
     this.menuitemNodes.forEach(function (item) {
-// R.G. Here to add the roving tabindex logic  ;)
+      // R.G. Here to add the roving tabindex logic  ;)
+      if (item === newMenuitem) { // Check if current item is the focuesd item
+        item.tabIndex = 0; //Set tab index to 0 to expose
+        newMenuitem.focus(); // Set the focus 
+      } else { //update the tabindex of the previously focused element to "-1"
+        item.tabIndex = -1;  //Set tab index to -1 
+      }
     });
   }
 
@@ -170,7 +176,7 @@ class MenuButtonActions {
     this.domNode.classList.remove('focus');
   }
 
-//This method is triggered when a keydown event occurs on the menu button.
+  //This method is triggered when a keydown event occurs on the menu button.
 
 
   onButtonKeydown(event) {
@@ -223,7 +229,7 @@ class MenuButtonActions {
     event.preventDefault();
   }
 
-// This method is triggered when a keydown event occurs on a menu item.
+  // This method is triggered when a keydown event occurs on a menu item.
 
   onMenuitemKeydown(event) {
     var tgt = event.currentTarget,
